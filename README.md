@@ -1,9 +1,9 @@
-## [Firecrawl MCP Agent](https://github.com/Coral-Protocol/firecrawl-coral-agent.git)
+## [ACI DEV MCP Agent](https://github.com/Coral-Protocol/firecrawl-coral-agent.git)
 
-The Firecrawl MCP Agent is an open-source agent built to perform advanced web scraping, crawling, and data extraction operations.
+ACI Dev agent capable of searching for relevant functions based on user intent and executing those functions with the required parameters.
 
 ## Responsibility
-The Firecrawl MCP Agent is an open-source agent designed for comprehensive web scraping, crawling, and data extraction tasks. It excels in structured data extraction and deep research by leveraging a multi-agent architecture to efficiently navigate, search, and analyze web content.
+ACI.dev is the open-source infrastructure layer for AI-agent tool-use and VibeOps. It gives AI agents intent-aware access to 600+ tools with multi-tenant auth, granular permissions, and dynamic tool discovery—exposed as either direct function calls or through a Unified Model-Context-Protocol (MCP) server.
 
 
 ## Details
@@ -11,7 +11,7 @@ The Firecrawl MCP Agent is an open-source agent designed for comprehensive web s
 - **Tools used**: Firecrawl MCP Server Tools, Coral Server Tools
 - **AI model**: OpenAI GPT-4o
 - **Date added**: June 4, 2025
-- **Reference**: [Firecrawl MCP Repo](https://github.com/mendableai/firecrawl)
+- **Reference**: [ACI DEV Repo](https://github.com/aipotheosis-labs/aci)
 - **License**: MIT
 
 ## Setup the Agent
