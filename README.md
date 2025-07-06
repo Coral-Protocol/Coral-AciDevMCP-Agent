@@ -65,11 +65,25 @@ Check if the .env file has correct URL for Coral Server and adjust the parameter
 
 </details>
 
-### 3. Configure MCP with required Apps
+### 3. Configure MCP with Required Apps
 
 <details>
+  
+1. Go to the "App Store" on your ACI.dev Dashboard.
 
+2. Search for "Gmail" using the search bar, then click on the Gmail app from the results.
 
+3. Click "Configure App" to begin setup.
+
+4. Enable the toggle for "Use ACI.dev's OAuth2 App" and confirm your choice.
+
+5. Choose your agent by selecting the "Default Agent" or any other preferred agent.
+
+6. Enter an Account Owner ID of your choice, then click "Start OAuth2 Flow".
+
+7. Select the Gmail account you wish to connect.
+
+8. Grant permission to ACI.dev by checking the required box, then click "Continue" to complete the configuration.
 
 </details>
 
