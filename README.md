@@ -73,7 +73,7 @@ Check if the .env file has correct URL for Coral Server and adjust the parameter
 
 
 2. **Search for "Gmail"** using the search bar, then click on the Gmail app from the results.  
-
+<img width="1887" height="883" alt="Image" src="https://github.com/user-attachments/assets/687883b1-f5a6-45db-8cc9-4167916de69b" />
 
 3. **Click "Configure App"** to begin setup.  
 
