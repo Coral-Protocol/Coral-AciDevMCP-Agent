@@ -68,23 +68,30 @@ Check if the .env file has correct URL for Coral Server and adjust the parameter
 ### 3. Configure MCP with Required Apps
 
 <details>
-  
-1. Go to the "App Store" on your ACI.dev Dashboard.
 
-2. Search for "Gmail" using the search bar, then click on the Gmail app from the results.
+1. Go to the **"App Store"** on your ACI.dev Dashboard.  
 
-3. Click "Configure App" to begin setup.
 
-4. Enable the toggle for "Use ACI.dev's OAuth2 App" and confirm your choice.
+2. **Search for "Gmail"** using the search bar, then click on the Gmail app from the results.  
+   ![](https://i.postimg.cc/WFJ1Mw9Q/Screenshot-2025-07-05-193320.png)
 
-5. Choose your agent by selecting the "Default Agent" or any other preferred agent.
+3. **Click "Configure App"** to begin setup.  
+   ![](https://i.postimg.cc/G47LV5VW/Screenshot-2025-07-05-193440.png)
 
-6. Enter an Account Owner ID of your choice, then click "Start OAuth2 Flow".
+4. **Enable the toggle** for *"Use ACI.dev's OAuth2 App"* and confirm your choice.  
+   ![](https://i.postimg.cc/SjCKRVY9/Screenshot-2025-07-05-193500.png)
 
-7. Select the Gmail account you wish to connect.
+5. **Choose your agent** by selecting the *"Default Agent"* or any other preferred agent.  
+   ![](https://i.postimg.cc/Yhxqf93q/Screenshot-2025-07-05-193511.png)
 
-8. Grant permission to ACI.dev by checking the required box, then click "Continue" to complete the configuration.
+6. **Enter an Account Owner ID** of your choice, then click **"Start OAuth2 Flow"**.  
+   ![](https://i.postimg.cc/ZCm5d36M/Screenshot-2025-07-05-193545.png)
 
+7. **Select the Gmail account** you wish to connect.  
+   ![](https://i.postimg.cc/185RWQC0/Screenshot-2025-07-05-193628.png)
+
+8. **Grant permission** to ACI.dev by checking the required box, then click **"Continue"** to complete the configuration.
+   ![](https://i.postimg.cc/94DmhBjr/Screenshot-2025-07-05-193701.png)
 </details>
 
 ## Run the Agent
