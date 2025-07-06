@@ -76,21 +76,22 @@ Check if the .env file has correct URL for Coral Server and adjust the parameter
 <img width="1887" height="883" alt="Image" src="https://github.com/user-attachments/assets/687883b1-f5a6-45db-8cc9-4167916de69b" />
 
 3. **Click "Configure App"** to begin setup.  
-
+<img width="1886" height="879" alt="Image" src="https://github.com/user-attachments/assets/b3a477b8-0724-463b-b6fa-5eff0b787bc9" />
 
 4. **Enable the toggle** for *"Use ACI.dev's OAuth2 App"* and confirm your choice.  
-
+<img width="1237" height="600" alt="Image" src="https://github.com/user-attachments/assets/3151fb6f-dd84-49d4-9de0-b797a6a224ee" />
 
 5. **Choose your agent** by selecting the *"Default Agent"* or any other preferred agent.  
-
+<img width="1231" height="504" alt="Image" src="https://github.com/user-attachments/assets/f6e1459d-4b52-4c5e-be7d-5d0759a8b416" />
 
 6. **Enter an Account Owner ID** of your choice, then click **"Start OAuth2 Flow"**.  
-
+<img width="1231" height="423" alt="Image" src="https://github.com/user-attachments/assets/f293cdac-bcdc-405f-b1b9-06dea7dea12f" />
 
 7. **Select the Gmail account** you wish to connect.  
-
+<img width="1397" height="473" alt="Image" src="https://github.com/user-attachments/assets/3b4c7f3b-84fe-4847-af12-cd55117175ec" />
 
 8. **Grant permission** to ACI.dev by checking the required box, then click **"Continue"** to complete the configuration.
+<img width="1382" height="877" alt="Image" src="https://github.com/user-attachments/assets/3e4f3f80-8e7c-4d2d-8e58-855d215726bb" />
 
 </details>
 
