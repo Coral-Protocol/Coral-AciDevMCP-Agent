@@ -65,6 +65,14 @@ Check if the .env file has correct URL for Coral Server and adjust the parameter
 
 </details>
 
+### 3. Configure MCP with required Apps
+
+<details>
+
+
+
+</details>
+
 ## Run the Agent
 
 You can run in either of the below modes to get your system running.  
