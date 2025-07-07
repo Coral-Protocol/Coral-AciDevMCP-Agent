@@ -13,8 +13,7 @@ ACI.dev is the open-source infrastructure layer for AI-agent tool-use and VibeOp
 - **Date added**: June 4, 2025
 - **Reference**: [ACI DEV Repo](https://github.com/aipotheosis-labs/aci)
 - **License**: MIT
-
-Demo Video: [Link](https://getrapidemo.com/videos/ad451996-4be1-4568-af3f-4dae227fb2c9)
+- **Demo Video**: [Link](https://getrapidemo.com/videos/ad451996-4be1-4568-af3f-4dae227fb2c9)
 
 ## Setup the Agent
 
