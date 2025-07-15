@@ -1,4 +1,4 @@
-## [ACI DEV MCP Agent](https://github.com/Coral-Protocol/firecrawl-coral-agent.git)
+## [ACI DEV MCP Agent](https://github.com/Coral-Protocol/Coral-AciDevMCP-Agent)
 
 ACI Dev agent capable of searching for relevant functions based on user intent and executing those functions with the required parameters.  
 
@@ -9,10 +9,9 @@ Link- [https://www.aci.dev/](https://www.aci.dev/)
 ## Responsibility
 ACI.dev is the open-source infrastructure layer for AI-agent tool-use and VibeOps. It gives AI agents intent-aware access to 600+ tools with multi-tenant auth, granular permissions, and dynamic tool discovery—exposed as either direct function calls or through a Unified Model-Context-Protocol (MCP) server.
 
-
 ## Details
-- **Framework**: LangChain
-- **Tools used**: Firecrawl MCP Server Tools, Coral Server Tools
+- **Framework**: Pydantic-AI
+- **Tools used**: ACI Dev MCP Server Tools, Coral Server Tools
 - **AI model**: OpenAI GPT-4o
 - **Date added**: June 4, 2025
 - **Reference**: [ACI DEV Repo](https://github.com/aipotheosis-labs/aci)
@@ -25,8 +24,7 @@ ACI.dev is the open-source infrastructure layer for AI-agent tool-use and VibeOp
 
 <details>
 
-Ensure that the [Coral Server](https://github.com/Coral-Protocol/coral-server) is running on your system. If you are trying to run Open Deep Research agent and require an input, you can either create your agent which communicates on the coral server or run and register the [Interface Agent](https://github.com/Coral-Protocol/Coral-Interface-Agent) on the Coral Server  
-
+Ensure that the [Coral Server](https://github.com/Coral-Protocol/coral-server) is running on your system. If you are trying to run the ACI Dev agent and require an input, you can either create your agent which communicates on the coral server or run and register the [Interface Agent](https://github.com/Coral-Protocol/Coral-Interface-Agent) on the Coral Server.
 
 ```bash
 # In a new terminal clone the repository:
@@ -70,7 +68,26 @@ Check if the .env file has correct URL for Coral Server and adjust the parameter
 
 </details>
 
-### 3. Configure MCP with Required Apps
+### 3. Configure Logfire for Monitoring
+
+<details>
+
+This agent uses [Logfire](https://ai.pydantic.dev/logfire/#pydantic-logfire) for monitoring tool usage and agent behavior. Logfire provides detailed insights into how your agent interacts with tools and handles requests.
+
+1. **Setup Logfire**
+   ```python
+   # These lines are already included in main.py
+   import logfire
+   
+   logfire.configure()  
+   logfire.instrument_pydantic_ai()
+   ```
+
+For more details about Logfire configuration and features, visit: [Pydantic-AI Logfire Documentation](https://ai.pydantic.dev/logfire/#pydantic-logfire)
+
+</details>
+
+### 4. Configure MCP with Required Apps
 
 <details>
 
@@ -130,21 +147,21 @@ applications:
 registry:
   Aacidevmcp_agent:
     options:
-      - name: "API_KEY"
+      - name: "OPENAI_API_KEY"
         type: "string"
         description: "API key for the service"
       - name: "ACI_OWNER_ID"
         type: "string"
-        description: "ACI OWNER IDfor the service"
+        description: "ACI OWNER ID for the service"
       - name: "ACI_API_KEY"
         type: "string"
-        description: "ACI API KEYfor the service"
+        description: "ACI API KEY for the service"
     runtime:
       type: "executable"
       command: ["bash", "-c", "${PROJECT_DIR}/run_agent.sh main.py"]
       environment:
-        - name: "API_KEY"
-          from: "API_KEY"
+        - name: "OPENAI_API_KEY"
+          from: "OPENAI_API_KEY"
         - name: "ACI_OWNER_ID"
           from: "ACI_OWNER_ID"
         - name: "ACI_API_KEY"
@@ -159,6 +176,7 @@ registry:
           value: "0.3"
 
 ```
+
 For Windows, create a powershell command (run_agent.ps1) and run:
 
 ```bash
@@ -215,4 +233,3 @@ The GitHub repositories created by the user sd2879 are:
 - **Name**: Suman Deb
 - **Affiliation**: Coral Protocol
 - **Contact**: [Discord](https://discord.com/invite/Xjm892dtt3)
-
