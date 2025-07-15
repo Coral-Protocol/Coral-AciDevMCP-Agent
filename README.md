@@ -4,7 +4,6 @@ ACI Dev agent capable of searching for relevant functions based on user intent a
 
 Link- [https://www.aci.dev/](https://www.aci.dev/)
 
-![Agentimage](https://github.com/Coral-Protocol/awesome-agents-for-multi-agent-systems/blob/main/images/Coral-AciDevMCP-Agent.png)
 
 ## Responsibility
 ACI.dev is the open-source infrastructure layer for AI-agent tool-use and VibeOps. It gives AI agents intent-aware access to 600+ tools with multi-tenant auth, granular permissions, and dynamic tool discovery—exposed as either direct function calls or through a Unified Model-Context-Protocol (MCP) server.
