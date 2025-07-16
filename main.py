@@ -7,7 +7,6 @@ import traceback
 import json
 from pydantic_ai import Agent
 from pydantic_ai.mcp import MCPServerSSE, MCPServerStdio
-import logfire
 
 # Set up logging
 logging.basicConfig(level=logging.INFO)
@@ -20,8 +19,9 @@ load_dotenv(override=True)
 base_url = os.getenv("CORAL_SSE_URL")
 agentID = os.getenv("CORAL_AGENT_ID")
 
-logfire.configure()  
-logfire.instrument_pydantic_ai() 
+# Debug environment variables
+logger.info(f"CORAL_SSE_URL: {base_url}")
+logger.info(f"CORAL_AGENT_ID: {agentID}")
 
 coral_params = {
     "agentId": agentID,
@@ -31,14 +31,34 @@ coral_params = {
 query_string = urllib.parse.urlencode(coral_params)
 
 async def get_mcp_tools(server):
-    """Get tools from an MCP server."""
+    """Get tools from an MCP server and return formatted tool descriptions."""
     try:
         async with server:
+            logger.info(f"Attempting to list tools from server: {server}")
             tools_result = await server.list_tools()
-            return tools_result.tools if hasattr(tools_result, 'tools') else []
+            logger.info(f"Tools result: {tools_result}")
+            # Check if tools_result is a list; if so, use it directly
+            tools = tools_result if isinstance(tools_result, list) else (tools_result.tools if hasattr(tools_result, 'tools') else [])
+            logger.info(f"Retrieved tools: {tools}")
+            
+            # Format tools like get_tools_description
+            def serialize_schema(tool):
+                # Use parameters_json_schema for ToolDefinition objects
+                if hasattr(tool, 'parameters_json_schema'):
+                    return json.dumps(tool.parameters_json_schema).replace('{', '{{').replace('}', '}}')
+                return "{}"
+            
+            formatted_tools = "\n".join(
+                f"Tool: {tool.name}, Schema: {serialize_schema(tool)}"
+                for tool in tools
+            )
+            return formatted_tools or "No tools available"
+            
     except Exception as e:
-        logger.warning(f"Could not get tools from MCP server: {str(e)}")
-        return []
+        logger.error(f"Error retrieving tools from server {server}: {str(e)}")
+        logger.error(traceback.format_exc())
+        return "Error retrieving tools"
+
 
 async def main():
     try:
@@ -72,49 +92,27 @@ async def main():
         coral_tools = await get_mcp_tools(coral_server)
         aci_tools = await get_mcp_tools(aci_server)
         
-        
+        # Print tools for debugging
+        print(coral_tools)
+        print("=== ACI TOOLS ===")
+        print(aci_tools)
         
         # Create system prompt with tool descriptions
-        system_prompt = """You are ACIDev agent interacting with tools from Coral Server and ACI MCP Server. Your task is to perform any instructions coming from other agents.
-
-Follow these steps in order:
-1. Call wait_for_mentions (timeoutMs: 30000) to receive mentions from other agents.
-2. When you receive a mention, keep the thread ID and the sender ID.
-3. Take 2 seconds to think about the content (instruction) of the message and check only from the list of your tools available for you to action.
-4. Check the tool schema and make a plan in steps for the task you want to perform.
-5. Use ACI_SEARCH_FUNCTIONS to search for the function you need to call.
-6. Use ACI_EXECUTE_FUNCTION to call the function you need to call.
-7. Take 3 seconds and think about the content and see if you have executed the instruction to the best of your ability and the tools. Make this your response as "answer".
-8. Use send_message tool to send a message in the same thread ID to the sender ID you received the mention from, with content: "answer".
-9. If any error occurs, use send_message to send a message in the same thread ID to the sender ID you received the mention from, with content: "error".
-10. Always respond back to the sender agent even if you have no answer or error.
-
-Available ACI Tools and Schemas:
-
-1. ACI_SEARCH_FUNCTIONS
-Description: This function allows you to find relevant executable functions and their schemas that can help complete your tasks.
-Schema: {
-    "intent": {
-        "type": "string",
-        "description": "Use this to find relevant functions you might need. Returned results of this function will be sorted by relevance to the intent."
-    }
-}
-
-2. ACI_EXECUTE_FUNCTION
-Description: Execute a specific retrieved function. Provide the executable function name, and the required function parameters for that function.
-Schema: {
-    "function_name": {
-        "type": "string",
-        "description": "The name of the function to execute"
-    },
-    "function_arguments": {
-        "type": "object",
-        "description": "A dictionary containing key-value pairs of input parameters required by the specified function. The parameter names and types must match those defined in the function definition previously retrieved. If the function requires no parameters, provide an empty object.",
-        "additionalProperties": true
-    }
-}
-
-You have access to coral tools for communication and aci tools for ACI operations."""
+        system_prompt = """You are an agent interacting with the tools from Coral Server and having your own tools. Your task is to perform any instructions coming from any agent. 
+                            Follow these steps in order:
+                            1. Call wait_for_mentions from coral tools (timeoutMs: 30000) to receive mentions from other agents.
+                            2. When you receive a mention, keep the thread ID and the sender ID.
+                            3. Take 2 seconds to think about the content (instruction) of the message and check only from the list of your tools available for you to action.
+                            4. Check the tool schema and make a plan in steps for the task you want to perform.
+                            5. Only call the tools you need to perform for each step of the plan to complete the instruction in the content.
+                            6. Take 3 seconds and think about the content and see if you have executed the instruction to the best of your ability and the tools. Make this your response as "answer".
+                            7. Use `send_message` from coral tools to send a message in the same thread ID to the sender Id you received the mention from, with content: "answer".
+                            8. If any error occurs, use `send_message` to send a message in the same thread ID to the sender Id you received the mention from, with content: "error".
+                            9. Always respond back to the sender agent even if you have no answer or error.
+                            10. Wait for 2 seconds and repeat the process from step 1.
+                            These are the list of coral tools: {coral_tools_description}
+                            These are the list of your tools: {agent_tools_description}
+                            """
         
         # Initialize agent with complete system prompt including tool descriptions
         agent = Agent(
