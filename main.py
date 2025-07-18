@@ -7,10 +7,12 @@ import traceback
 import json
 from pydantic_ai import Agent
 from pydantic_ai.mcp import MCPServerSSE, MCPServerStdio
-
+import logfire
 # Set up logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
+logfire.configure()  
+logfire.instrument_pydantic_ai() 
 
 # Load environment variables
 load_dotenv(override=True)
@@ -102,14 +104,14 @@ async def main():
                             Follow these steps in order:
                             1. Call wait_for_mentions from coral tools (timeoutMs: 30000) to receive mentions from other agents.
                             2. When you receive a mention, keep the thread ID and the sender ID.
-                            3. Take 2 seconds to think about the content (instruction) of the message and check only from the list of your tools available for you to action.
+                            3. Think about the content (instruction) of the message and check only from the list of your tools available for you to action.
                             4. Check the tool schema and make a plan in steps for the task you want to perform.
                             5. Only call the tools you need to perform for each step of the plan to complete the instruction in the content.
-                            6. Take 3 seconds and think about the content and see if you have executed the instruction to the best of your ability and the tools. Make this your response as "answer".
+                            6. Think about the content and see if you have executed the instruction to the best of your ability and the tools. Make this your response as "answer".
                             7. Use `send_message` from coral tools to send a message in the same thread ID to the sender Id you received the mention from, with content: "answer".
                             8. If any error occurs, use `send_message` to send a message in the same thread ID to the sender Id you received the mention from, with content: "error".
                             9. Always respond back to the sender agent even if you have no answer or error.
-                            10. Wait for 2 seconds and repeat the process from step 1.
+                            10. Repeat the process from step 1.
                             These are the list of coral tools: {coral_tools_description}
                             These are the list of your tools: {agent_tools_description}
                             """
