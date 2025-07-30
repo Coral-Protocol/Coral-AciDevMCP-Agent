@@ -64,7 +64,7 @@ async def main():
 
     coral_params = {
         "agentId": agentID,
-        "agentDescription": "ACI Dev agent capable of searching for relevant functions based on user intent and executing those functions with the required parameters, it has various MCPs as tools such as GMAIL, CALENDAR, and others.",
+        "agentDescription": "ACI Dev agent is capable of searching for relevant functions based on user intent and executing those functions with the required parameters, it has various MCPs as tools such as GMAIL, CALENDAR, and others.",
     }
 
     query_string = urllib.parse.urlencode(coral_params)
