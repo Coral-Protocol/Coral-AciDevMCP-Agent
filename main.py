@@ -72,20 +72,21 @@ async def main():
     CORAL_SERVER_URL = f"{base_url}?{query_string}"
     logger.info(f"Connecting to Coral Server: {CORAL_SERVER_URL}")
 
+    timeout = os.getenv("TIMEOUT_MS", 300)
     client = MultiServerMCPClient(
         connections={
             "coral": {
                 "transport": "sse",
                 "url": CORAL_SERVER_URL,
-                "timeout": 300,
-                "sse_read_timeout": 300,
+                "timeout": timeout,
+                "sse_read_timeout": timeout,
             },
             "aci-mcp": {
                 "transport": "stdio",
                 "command": "uvx",
                 "args": ["aci-mcp", "unified-server", "--linked-account-owner-id", os.getenv("ACI_OWNER_ID"), "--port", "8000", "--allowed-apps-only"],
                 "env": {"ACI_API_KEY": os.getenv("ACI_API_KEY")},
-                "timeout": 300
+                "timeout": timeout
             }
         }
     )
