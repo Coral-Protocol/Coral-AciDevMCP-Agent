@@ -46,23 +46,20 @@ async def create_agent(coral_tools, agent_tools):
     model = init_chat_model(
         model=os.getenv("MODEL_NAME", "gpt-4.1"),
         model_provider=os.getenv("MODEL_PROVIDER", "openai"),
-        api_key=os.getenv("API_KEY"),
+        api_key=os.getenv("MODEL_API_KEY"),
         temperature=os.getenv("MODEL_TEMPERATURE", "0.1"),
         max_tokens=os.getenv("MODEL_TOKEN", "8000")
     )
     agent = create_tool_calling_agent(model, combined_tools, prompt)
-    return AgentExecutor(agent=agent, tools=combined_tools, verbose=True)
+    return AgentExecutor(agent=agent, tools=combined_tools, verbose=True, handle_parsing_errors=True)
 
 async def main():
-    runtime = os.getenv("CORAL_ORCHESTRATION_RUNTIME", "devmode")
-
-    if runtime == "docker" or runtime == "executable":
-        base_url = os.getenv("CORAL_SSE_URL")
-        agentID = os.getenv("CORAL_AGENT_ID")
-    else:
+    runtime = os.getenv("CORAL_ORCHESTRATION_RUNTIME", None)
+    if runtime is None:
         load_dotenv()
-        base_url = os.getenv("CORAL_SSE_URL")
-        agentID = os.getenv("CORAL_AGENT_ID")
+
+    base_url = os.getenv("CORAL_SSE_URL")
+    agentID = os.getenv("CORAL_AGENT_ID")
 
     coral_params = {
         "agentId": agentID,
@@ -97,7 +94,6 @@ async def main():
     coral_tools = await client.get_tools(server_name="coral")
     agent_tools = await client.get_tools(server_name="aci-mcp")
     print(agent_tools)
-    # agent_tools = await client.get_tools(server_name="coral")
 
     print(f"Coral tools count: {len(coral_tools)} and agent tools count: {len(agent_tools)}")
 
